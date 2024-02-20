@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { connection } from "../config/database.js";
 import { io } from '../../index.js'
-
+import 'dotenv/config'
 
 const route = Router()
 
@@ -59,7 +59,7 @@ route.post('/api/create-order',async(req,res)=>{
 
 
     mercadopago.configure({
-      access_token:'TEST-7751939271839112-020915-a237287cb3fb227f4c76437a200ff952-1677027160'
+      access_token: process.env.MP_TOKEN
     })
 
     const result = await mercadopago.preferences.create({
