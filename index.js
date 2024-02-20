@@ -27,5 +27,4 @@ io.on('connection', socket => {
 
 server.listen(4000)
 
-console.log(process.env.URI_BD)
 console.log(`server running on port ${4000}`)
