@@ -105,9 +105,10 @@ async function registerPay (paymentId,rut,idDoc,monto){
     
     if(data.body.status === 'approved'){
       try{
-        await connection.execute('INSERT INTO pagos_marcados(idCliente,idDoc,bruto,neto,fecha) VALUES (?,?,?,?,?)',[rut,idDoc,monto,monto,`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`])
         const idDocOf = idDoc.replace("-", "/")
+        await connection.execute('INSERT INTO pagos_marcados(idCliente,idDoc,bruto,neto,fecha) VALUES (?,?,?,?,?)',[rut,idDocOf,monto,monto,`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`])
         //Aca deberia ir el socket
+        console.log('mandando evento')
         io.emit('pegoRegister', {idDocOf,status:"apro"});
       }catch(err){
         console.log(err)
