@@ -3,6 +3,8 @@ import mercadopago from 'mercadopago';
 import fs from 'fs/promises';
 import path from 'path';
 import { connection } from "../config/database.js";
+import { io } from '../../index.js'
+
 
 const route = Router()
 
