@@ -1,4 +1,12 @@
-[
+[    
+    {
+      "mail_empresa": "usuario_test@gmail.com",
+      "mail": "usuario_test@gmail.com",
+      "rut": "197476664",
+      "razon_social": "CRISTOBAL",
+      "clave_si": "1234pin56",
+      "celular": "56982016617"
+    },
     {
       "mail_empresa": "lucianorhg53@gmail.com",
       "mail": "lucianorhg53@gmail.com",
