@@ -69,8 +69,8 @@ route.post('/api/create-order',async(req,res)=>{
           quantity:1
         }
       ],
-      back_urls: { success: 'http://localhost:5173/succesPay' },
-      notification_url: `https://ad20-168-194-204-167.ngrok-free.app/webhook/${monto}/${rut}/${docId}`,
+      //back_urls: { success: 'http://localhost:5173/succesPay' },
+      notification_url: `https://backend-mp-jgj8.onrender.com/webhook/${monto}/${rut}/${docId}`,
     })
     res.json({ok:true,data:result}).status(200)
 })
