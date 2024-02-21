@@ -100,9 +100,14 @@ async function registerPay (paymentId,rut,idDoc,monto){
     const date = new Date()
     
     if(data.body.status === 'approved'){
+      console.log('pago aprovado')
       try{
         const idDocOf = idDoc.replace("-", "/")
+        console.log('respuesta de registros')
         const [responseFact] = await connection.execute(`SELECT * FROM pagos_marcados WHERE idCliente="${rut}" AND idDoc = "${idDocOf}" AND bruto = "${monto}" AND neto ="${monto}" AND fecha = "${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}"`)
+          
+        console.log(responseFact)
+          
         if(responseFact.length === 0){
           await connection.execute('INSERT INTO pagos_marcados(idCliente,idDoc,bruto,neto,fecha) VALUES (?,?,?,?,?)',[rut,idDocOf,monto,monto,`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`])
         }
