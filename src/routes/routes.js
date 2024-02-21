@@ -16,7 +16,7 @@ route.get('/',async(req,res)=>{
 })
 
 ///////////////////////// LOGIN ////////////////////////////////////
-
+/*
 route.post('/api/form',async(req,res)=>{
     const { rut,password } = req.body;
     try{
@@ -45,7 +45,33 @@ route.post('/api/form',async(req,res)=>{
     }
 
 })
+*/
 
+///////////////////////// LOGIN ////////////////////////////////////
+
+route.post('/api/form',async(req,res)=>{
+    const { rut,password } = req.body;
+    try{
+        const [findClient] = await connection.execute(`SELECT * FROM clientes WHERE rut = "${rut}" AND clave = "${password}"`)
+        if(findClient.length === 1){s
+          const [pagos] = await connection.execute('SELECT * FROM pagos_marcados WHERE idCliente = ?',[rut]);
+          return res
+          .status(200)
+          .json({ok:true,data:findClient,pagos})
+        }else{
+          return res
+          .status(400)
+          .json({ok:false,code:1,message:'ruto o contrasena incorrectos'})
+        }
+        
+    }catch(err){
+        console.log(err)
+        return res
+        .status(400)
+        .json({ok:false,code:0,err})
+    }
+
+})
 
 ///////////////////////// MERCADO PAGO /////////////////////////////////
 
