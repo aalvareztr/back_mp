@@ -21,7 +21,7 @@ route.post('/api/form',async(req,res)=>{
     const { rut,password } = req.body;
     try{
         const [findClient] = await connection.execute(`SELECT * FROM clientes WHERE rut = "${rut}" AND clave = "${password}"`)
-        if(findClient.length === 1){s
+        if(findClient.length === 1){
           const [pagos] = await connection.execute('SELECT * FROM pagos_marcados WHERE idCliente = ?',[rut]);
           return res
           .status(200)
