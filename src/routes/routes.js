@@ -92,6 +92,8 @@ route.post('/webhook/:monto/:rut/:idDoc',async(req,res)=>{
 })
 
 
+
+
 async function registerPay (paymentId,rut,idDoc,monto){
     const data = await mercadopago.payment.findById(paymentId);
     //console.log(data.body);
@@ -100,9 +102,11 @@ async function registerPay (paymentId,rut,idDoc,monto){
     if(data.body.status === 'approved'){
       try{
         const idDocOf = idDoc.replace("-", "/")
-        await connection.execute('INSERT INTO pagos_marcados(idCliente,idDoc,bruto,neto,fecha) VALUES (?,?,?,?,?)',[rut,idDocOf,monto,monto,`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`])
+        const [responseFact] = await connection.execute(`SELECT * FROM pagos_marcados WHERE idCliente="${rut}" AND idDoc = "${idDocOf}" AND bruto = "${monto}" AND neto ="${monto}" AND fecha = "${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}"`)
+        if(responseFact.length === 0){
+          await connection.execute('INSERT INTO pagos_marcados(idCliente,idDoc,bruto,neto,fecha) VALUES (?,?,?,?,?)',[rut,idDocOf,monto,monto,`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`])
+        }
         //Aca deberia ir el socket
-        console.log('mandando evento')
         io.emit('pegoRegister', {idDocOf,status:"apro"});
       }catch(err){
         console.log(err)
