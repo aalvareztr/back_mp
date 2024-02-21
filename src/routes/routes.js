@@ -61,7 +61,7 @@ route.post('/api/create-order',async(req,res)=>{
         {   
           title:'Factura',
           unit_price: monto,
-          currency_id:"ARS",
+          //currency_id:"ARS",
           quantity:1
         }
       ],
